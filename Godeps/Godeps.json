@@ -1,0 +1,10 @@
+{
+	"ImportPath": "github.com/austenLacy/docker-image-viz",
+	"GoVersion": "go1.5.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/fsouza/go-dockerclient",
+			"Rev": "e0d22d30691bcc996eca51f729a4777b8c7dc2a8"
+		}
+	]
+}
