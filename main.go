@@ -7,7 +7,7 @@ import (
 
 func main() {
     // endpoint := "unix:///var/run/docker.sock"
-    
+
     // use docker-machine
     client, _ := docker.NewClientFromEnv()
     imgs, _ := client.ListImages(docker.ListImagesOptions{All: false})
@@ -18,5 +18,6 @@ func main() {
         fmt.Println("Size: ", img.Size)
         fmt.Println("VirtualSize: ", img.VirtualSize)
         fmt.Println("ParentId: ", img.ParentID)
+        fmt.Println("")
     }
 }
