@@ -2,23 +2,55 @@ package main
 
 import (
 	"fmt"
-	"github.com/austenLacy/docker-image-viz/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+	"os"
+	"github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/codegangsta/cli"
+	"github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 )
 
 func main() {
-    // use docker-machine
-    client, _ := docker.NewClientFromEnv()
-    imgs, _ := client.ListImages(docker.ListImagesOptions{All: false})
 
-	if len(imgs) == 0 {
-		fmt.Println("No images available")
+	// use docker-machine
+	client, err := docker.NewClientFromEnv()
+
+	if err != nil {
+		fmt.Println("Unable to get docker client from docker-machine env")
 	}
 
-    for _, img := range imgs {
+	app := cli.NewApp()
+	app.Name = "docker-inspect"
+	app.Usage = "get some stats on your docker images, containers, and env"
+	app.Version = "0.0.1"
+	app.Action = func(c *cli.Context) {
+		fmt.Println("Hello friend!")
+	}
+
+	app.Commands = []cli.Command{
+		{
+			Name:    "images",
+			Aliases: []string{"i"},
+			Usage:   "view any images running with docker-machine",
+			Action: func(c *cli.Context) {
+				viewImages(client)
+			},
+		},
+	}
+
+	app.Run(os.Args)
+}
+
+func viewImages(client *docker.Client) {
+	imgs, err := client.ListImages(docker.ListImagesOptions{All: false})
+
+	if err != nil || len(imgs) < 1 {
+		fmt.Println("No image info available. Double check you have a machine running.")
+		return
+	}
+
+	for _, img := range imgs {
 		fmt.Println("Image ID: ", img.ID)
 		fmt.Println("Image RepoTags: ", img.RepoTags)
 		fmt.Println("Image Created: ", img.Created)
-        fmt.Println("Image Size: ", img.Size)
+		fmt.Println("Image Size: ", img.Size)
 
 		// IMAGE HISTORY INFO
 		//
@@ -38,6 +70,6 @@ func main() {
 			fmt.Println("")
 		}
 		fmt.Println("===============================================")
-        fmt.Println("")
-    }
+		fmt.Println("")
+	}
 }

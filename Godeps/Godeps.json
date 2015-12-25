@@ -1,7 +1,12 @@
 {
-	"ImportPath": "github.com/austenLacy/docker-image-viz",
+	"ImportPath": "github.com/austenLacy/docker-inspect",
 	"GoVersion": "go1.5.2",
 	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/cli",
+			"Comment": "1.2.0-187-gc31a797",
+			"Rev": "c31a7975863e7810c92e2e288a9ab074f9a88f29"
+		},
 		{
 			"ImportPath": "github.com/fsouza/go-dockerclient",
 			"Rev": "e0d22d30691bcc996eca51f729a4777b8c7dc2a8"
