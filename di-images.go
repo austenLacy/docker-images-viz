@@ -94,6 +94,19 @@ func collectRoots(images *[]Image) []Image {
 	return roots
 }
 
+func collectChildren(images *[]Image) map[string][]Image {
+	var imagesByParent = make(map[string][]Image)
+	for _, image := range *images {
+		if children, exists := imagesByParent[image.ParentId]; exists {
+			imagesByParent[image.ParentId] = append(children, image)
+		} else {
+			imagesByParent[image.ParentId] = []Image{image}
+		}
+	}
+
+	return imagesByParent
+}
+
 func filterOnlyLabeledImages(images *[]Image, byParent *map[string][]Image) (filteredImages []Image, filteredChildren map[string][]Image) {
 	for i := 0; i < len(*images); i++ {
 		// image should visible
@@ -124,17 +137,4 @@ func filterOnlyLabeledImages(images *[]Image, byParent *map[string][]Image) (fil
 
 	filteredChildren = collectChildren(&filteredImages)
 	return filteredImages, filteredChildren
-}
-
-func collectChildren(images *[]Image) map[string][]Image {
-	var imagesByParent = make(map[string][]Image)
-	for _, image := range *images {
-		if children, exists := imagesByParent[image.ParentId]; exists {
-			imagesByParent[image.ParentId] = append(children, image)
-		} else {
-			imagesByParent[image.ParentId] = []Image{image}
-		}
-	}
-
-	return imagesByParent
 }

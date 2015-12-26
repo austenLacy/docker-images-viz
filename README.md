@@ -11,6 +11,7 @@ Currently uses:
 ### TODO:
 * <s>Make the tree view look better. Similar to the now deprecated `docker images --tree` output.</s>
 * <s>Break up code so it's not all in `main.go`</s>
+* <s>Add ability to show images tree by image name</s>
 * Add ability to show images tree by image ID
 * Add ability to show container info by container ID
 * <s>Add ability to visualize any containers en masse (similar to running `docker ps -a`)</s>

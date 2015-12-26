@@ -36,6 +36,13 @@ func main() {
 			Aliases: []string{"i"},
 			Usage: "view any docker images",
 			Action: func(c *cli.Context) {
+				// check if user has provided image ID to build tree for
+				var argImageId string
+
+				if len(c.Args()) > 0 {
+					argImageId = c.Args()[0]
+				}
+
 				if shouldTruncateId == "false" {
 					truncate = false
 				}
@@ -48,7 +55,7 @@ func main() {
 					accumulate = true
 				}
 
-				imagesAction(client, verbose, truncate, accumulate)
+				imagesAction(client, argImageId, verbose, truncate, accumulate)
 			},
 			Flags: []cli.Flag {
 				cli.StringFlag{
