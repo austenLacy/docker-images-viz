@@ -16,7 +16,7 @@ type Image struct {
 }
 
 /********************************************************************************
- * PRINT FUNCTIONS
+ * PRINT IMAGES TREE FUNCTIONS
  ********************************************************************************/
 func printImages(images []Image, byParent map[string][]Image, noTrunc bool, incremental bool) string {
 	var buffer bytes.Buffer
@@ -69,7 +69,7 @@ func printTreeNode(buffer *bytes.Buffer, image Image, shouldTruncate bool, incre
 		size = image.Size
 	}
 
-	buffer.WriteString(fmt.Sprintf("%s(%s) -- Virtual Size: %s", prefix, imageID, convertToHumanReadableSize(size)))
+	buffer.WriteString(fmt.Sprintf("%s %s -- Virtual Size: %s", prefix, imageID, convertToHumanReadableSize(size)))
 
 	if image.RepoTags[0] != "<none>:<none>" {
 		buffer.WriteString(fmt.Sprintf(" Tags: %s\n", strings.Join(image.RepoTags, ", ")))
@@ -103,6 +103,7 @@ func filterOnlyLabeledImages(images *[]Image, byParent *map[string][]Image) (fil
 		visible := ((*images)[i].RepoTags[0] != "<none>:<none>") ||
                    ((*images)[i].ParentId == "") ||
                    (len((*byParent)[(*images)[i].Id]) > 1)
+
 		if visible {
 			filteredImages = append(filteredImages, (*images)[i])
 		} else {
@@ -122,7 +123,6 @@ func filterOnlyLabeledImages(images *[]Image, byParent *map[string][]Image) (fil
 	}
 
 	filteredChildren = collectChildren(&filteredImages)
-
 	return filteredImages, filteredChildren
 }
 
@@ -137,26 +137,4 @@ func collectChildren(images *[]Image) map[string][]Image {
 	}
 
 	return imagesByParent
-}
-
-func convertToHumanReadableSize(raw int64) string {
-	sizes := []string{"B", "KB", "MB", "GB", "TB"}
-
-	rawFloat := float64(raw)
-	ind := 0
-
-	for {
-		if rawFloat < 1000 {
-			break
-		} else {
-			rawFloat = rawFloat / 1000
-			ind = ind + 1
-		}
-	}
-
-	return fmt.Sprintf("%.01f %s", rawFloat, sizes[ind])
-}
-
-func truncateId(id string) string {
-	return id[0:12]
 }

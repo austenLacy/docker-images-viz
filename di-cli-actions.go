@@ -5,14 +5,14 @@ import(
     "github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 )
 
-func viewImagesAction(client *docker.Client, isVerbose bool, shouldTruncateId bool, shouldAccumulate bool) {
+func imagesAction(client *docker.Client, isVerbose bool, shouldTruncateId bool, shouldAccumulate bool) {
     var images *[]Image
     var imgs []Image
 
 	clientImages, err := client.ListImages(docker.ListImagesOptions{All: true})
 
 	if err != nil || len(clientImages) < 1 {
-		fmt.Println("No image info available. Double check you have a machine running.")
+		fmt.Println("No image info available. Double check you have a docker-machine machine running.")
 		return
 	}
 
@@ -38,6 +38,18 @@ func viewImagesAction(client *docker.Client, isVerbose bool, shouldTruncateId bo
         *images, imagesByParent = filterOnlyLabeledImages(images, &imagesByParent)
         fmt.Print(printImages(roots, imagesByParent, shouldTruncateId, shouldAccumulate))
     }
+}
 
+func containersAction(client *docker.Client, shouldTruncateId bool) {
+    clientContainers, err := client.ListContainers(docker.ListContainersOptions{All: true})
+
+    if err != nil || len(clientContainers) < 1 {
+        fmt.Println("No containers info available. Double check you have a docker-machine machine running")
+        return
+    }
+
+    for _, container := range clientContainers {
+        printContainer(container, shouldTruncateId)
+    }
 }
 
