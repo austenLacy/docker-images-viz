@@ -1,8 +1,8 @@
 package main
 
-import(
-    "fmt"
-    "github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+import (
+	"fmt"
+	"github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 )
 
 type Container struct {
@@ -13,52 +13,50 @@ type Container struct {
 	Created    int64                    `json: "created"`
 	Status     string                   `json: "status"`
 	Command    string                   `json: "command"`
-    SizeRw     int64                    `json: "sizeRw"`
-    SizeRootFs int64                    `json: "sizeRootFs"`
+	SizeRw     int64                    `json: "sizeRw"`
+	SizeRootFs int64                    `json: "sizeRootFs"`
 }
-
 
 /********************************************************************************
  * PRINT CONTAINERS FUNCTIONS
  ********************************************************************************/
 
 func printContainer(clientContainer docker.APIContainers, shouldTruncateId bool) {
-    container := Container{
-        clientContainer.ID,
+	container := Container{
+		clientContainer.ID,
 		clientContainer.Image,
 		clientContainer.Names,
 		apiPortToMap(clientContainer.Ports),
 		clientContainer.Created,
 		clientContainer.Status,
 		clientContainer.Command,
-        clientContainer.SizeRw,
-        clientContainer.SizeRootFs,
-    }
+		clientContainer.SizeRw,
+		clientContainer.SizeRootFs,
+	}
 
-    fmt.Println("----------------------------------------------------------------------------------")
-    if shouldTruncateId {
-        fmt.Println("ID: ", truncateId(container.Id))
-    } else {
-        fmt.Println("ID: ", container.Id)
-    }
-    fmt.Println("Image: ", container.Image)
-    fmt.Println("Names: ", container.Names)
-    fmt.Println("Ports: \n")
-    for _, port := range container.Ports {
-        if len(port) < 1 {
-            continue
-        }
-        fmt.Println("├───── IP: ", port["IP"])
-        fmt.Println("├───── Type: ", port["Type"])
-        fmt.Println("├───── PrivatePort: ", port["PrivatePort"])
-        fmt.Println("├───── PublicPort: ", port["PublicPort"])
-        fmt.Println("")
-    }
-    fmt.Println("Created: ", container.Created)
-    fmt.Println("Status: ", container.Status)
-    fmt.Println("Command: ", container.Command)
-    fmt.Println("SizeRw: ", container.SizeRw)
-    fmt.Println("SizeRootFs: ", container.SizeRootFs)
-    fmt.Println("----------------------------------------------------------------------------------\n")
+	fmt.Println("----------------------------------------------------------------------------------")
+	if shouldTruncateId {
+		fmt.Println("ID: ", truncateId(container.Id))
+	} else {
+		fmt.Println("ID: ", container.Id)
+	}
+	fmt.Println("Image: ", container.Image)
+	fmt.Println("Names: ", container.Names)
+	fmt.Println("Ports: \n")
+	for _, port := range container.Ports {
+		if len(port) < 1 {
+			continue
+		}
+		fmt.Println("├───── IP: ", port["IP"])
+		fmt.Println("├───── Type: ", port["Type"])
+		fmt.Println("├───── PrivatePort: ", port["PrivatePort"])
+		fmt.Println("├───── PublicPort: ", port["PublicPort"])
+		fmt.Println("")
+	}
+	fmt.Println("Created: ", container.Created)
+	fmt.Println("Status: ", container.Status)
+	fmt.Println("Command: ", container.Command)
+	fmt.Println("SizeRw: ", container.SizeRw)
+	fmt.Println("SizeRootFs: ", container.SizeRootFs)
+	fmt.Println("----------------------------------------------------------------------------------\n")
 }
-

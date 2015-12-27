@@ -1,8 +1,8 @@
 package main
 
-import(
-    "fmt"
-    "github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+import (
+	"fmt"
+	"github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 )
 
 func convertToHumanReadableSize(raw int64) string {
@@ -31,7 +31,7 @@ func apiPortToMap(ports []docker.APIPort) []map[string]interface{} {
 	result := make([]map[string]interface{}, 2)
 	for _, port := range ports {
 		intPort := map[string]interface{}{
-	        "IP":          port.IP,
+			"IP":          port.IP,
 			"Type":        port.Type,
 			"PrivatePort": port.PrivatePort,
 			"PublicPort":  port.PublicPort,

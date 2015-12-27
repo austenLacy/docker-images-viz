@@ -7,10 +7,12 @@ A lot of the motivation for the images tree view is because of the deprecation o
 ## Steps to install
 
 1. Make sure [go](https://golang.org/) is installed on your machine
-2. Download `docker-inspect` source
-3. Navigate to `docker-inspect` directory and run `go install` to put `docker-inspect` binary into your `$GOPATH/bin`
-4. I suggest putting your `$GOPATH/bin` into your `$PATH` with `export PATH=$PATH:$GOPATH/bin`
-5. If you followed step 4 then the command `docker-inspect` is now in your path and can be run anywhere with `docker-inspect`
+2. Make sure [godep](https://github.com/tools/godep) is installed on your machine to manage dependecies
+3. Download `docker-inspect` source
+4. Navigate to the `docker-inspect` directory and run `godep save ./...` and `godep save -r`
+5. Navigate to `docker-inspect` directory and run `go install` to put `docker-inspect` binary into your `$GOPATH/bin`
+6. I suggest putting your `$GOPATH/bin` into your `$PATH` with `export PATH=$PATH:$GOPATH/bin`
+7. If you followed step 4 then the command `docker-inspect` is now in your path and can be run anywhere with `docker-inspect`
 
 >Note this currently only works with a `docker-machine` environment. See [docker-machine](https://docs.docker.com/machine/) for more info.
 

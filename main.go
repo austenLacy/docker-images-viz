@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/codegangsta/cli"
 	"github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
+	"os"
 )
 
 var isVerbose string
@@ -32,9 +32,9 @@ func main() {
 
 	app.Commands = []cli.Command{
 		{
-			Name: "images",
+			Name:    "images",
 			Aliases: []string{"i"},
-			Usage: "view any docker images",
+			Usage:   "view any docker images",
 			Action: func(c *cli.Context) {
 				// check if user has provided image ID to build tree for
 				var argImageId string
@@ -57,39 +57,39 @@ func main() {
 
 				imagesAction(client, argImageId, verbose, truncate, accumulate)
 			},
-			Flags: []cli.Flag {
+			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name: "verbose, verb",
-					Usage: "if true show all (labeled and unlabeled) images, if false show only labeled images, true by default",
+					Name:        "verbose, verb",
+					Usage:       "if true show all (labeled and unlabeled) images, if false show only labeled images, true by default",
 					Destination: &isVerbose,
 				},
 				cli.StringFlag{
-					Name: "truncate-id, ti",
-					Usage: "if true truncates the image id to just the first 12 characters, if false then shows entire id. true by default",
+					Name:        "truncate-id, ti",
+					Usage:       "if true truncates the image id to just the first 12 characters, if false then shows entire id. true by default",
 					Destination: &shouldTruncateId,
 				},
 				cli.StringFlag{
-					Name: "accumulate, acc",
-					Usage: "if true accumulates the each image's size in tree view, if false then it shows each image's individual size, false by default",
+					Name:        "accumulate, acc",
+					Usage:       "if true accumulates the each image's size in tree view, if false then it shows each image's individual size, false by default",
 					Destination: &shouldAccumulate,
 				},
 			},
 		},
 		{
-			Name: "containers",
+			Name:    "containers",
 			Aliases: []string{"c"},
-			Usage: "view any docker containers running with docker-machine",
+			Usage:   "view any docker containers running with docker-machine",
 			Action: func(c *cli.Context) {
 				if shouldTruncateId == "false" {
 					truncate = false
 				}
 
-				containersAction(client, truncate);
+				containersAction(client, truncate)
 			},
-			Flags: []cli.Flag {
+			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name: "truncate-id, ti",
-					Usage: "if true truncates the container id to just the first 12 characters, if false then shows entire id. true by default",
+					Name:        "truncate-id, ti",
+					Usage:       "if true truncates the container id to just the first 12 characters, if false then shows entire id. true by default",
 					Destination: &shouldTruncateId,
 				},
 			},
