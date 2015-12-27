@@ -95,4 +95,3 @@ func containersAction(client *docker.Client, shouldTruncateId bool) {
         printContainer(container, shouldTruncateId)
     }
 }
-

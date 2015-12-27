@@ -5,7 +5,6 @@ import(
     "github.com/austenLacy/docker-inspect/Godeps/_workspace/src/github.com/fsouza/go-dockerclient"
 )
 
-
 func convertToHumanReadableSize(raw int64) string {
 	sizes := []string{"B", "KB", "MB", "GB", "TB"}
 

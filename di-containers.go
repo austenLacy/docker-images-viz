@@ -23,9 +23,6 @@ type Container struct {
  ********************************************************************************/
 
 func printContainer(clientContainer docker.APIContainers, shouldTruncateId bool) {
-    // TODO: use the `go-dockerclient Container type` here to show
-    //       more info on the container than the basic `docker.APIContainers`
-    //       See: client.InspectContainer(container.ID)
     container := Container{
         clientContainer.ID,
 		clientContainer.Image,
